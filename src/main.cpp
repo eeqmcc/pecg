@@ -16,6 +16,7 @@ int main(int argc, char **argv)
     bresenhamOctant1i(rgba, 256, 256, 0, 0, 200, 30);
     bresenhamLine(rgba, 256, 256, 0, 0, 200, 230);
 
+    bresenhamCircle(rgba, 256, 256, 100, 100, 100);
     FILE *fp = fopen("rgba.png", "wb");
     svpng(fp, 256, 256, rgba, 1);
     fclose(fp);

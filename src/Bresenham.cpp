@@ -92,3 +92,75 @@ int bresenhamLine(unsigned char *image, int width, int height, int x1, int y1, i
 
     return 0;
 }
+
+int bresenhamCircle(unsigned char *image, int width, int height, int cx, int cy, int R)
+{
+    int x = 0;
+    int y = R;
+    int delta = 2 * (1 - R);
+
+    int limit = 0;
+    while (y >= limit) {
+        int ix = x + cx;
+        int iy = y + cy;
+        image[iy * width * 4 + 4 * ix] = 255;
+        image[iy * width * 4 + 4 * ix + 1] = 0;
+        image[iy * width * 4 + 4 * ix + 2] = 0;
+        image[iy * width * 4 + 4 * ix + 3] = 255;
+
+        iy = -y + cy;
+        image[iy * width * 4 + 4 * ix] = 255;
+        image[iy * width * 4 + 4 * ix + 1] = 0;
+        image[iy * width * 4 + 4 * ix + 2] = 0;
+        image[iy * width * 4 + 4 * ix + 3] = 255;
+
+        ix = -x + cx;
+        image[iy * width * 4 + 4 * ix] = 255;
+        image[iy * width * 4 + 4 * ix + 1] = 0;
+        image[iy * width * 4 + 4 * ix + 2] = 0;
+        image[iy * width * 4 + 4 * ix + 3] = 255;
+
+        iy = y + cy;
+        image[iy * width * 4 + 4 * ix] = 255;
+        image[iy * width * 4 + 4 * ix + 1] = 0;
+        image[iy * width * 4 + 4 * ix + 2] = 0;
+        image[iy * width * 4 + 4 * ix + 3] = 255;
+
+        if (delta < 0) {
+            int sigma = 2 * (delta - y) - 1;
+            if (sigma <= 0) {
+                // move horizontally
+                x++;
+                delta += 2 * x + 1;
+            }
+            else {
+                // move diagonally
+                x++;
+                y--;
+                delta += 2 * (x - y + 1);
+            }
+        }
+        else if (delta > 0) {
+            int sigma = 2 * (delta - x) - 1;
+            if (sigma <= 0) {
+                // move diagonally
+                x++;
+                y--;
+                delta += 2 * (x - y + 1);
+            }
+            else {
+                // move vertical
+                y--;
+                delta += 1 - 2 * y;
+            }
+        }
+        else if (delta == 0) {
+            // move diagnoally
+            x++;
+            y--;
+            delta += 2 * (x - y + 1);
+        }
+    }
+
+    return 0;
+}
