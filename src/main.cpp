@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "DDA.h"
 #include "Bresenham.h"
+#include "Ellipse.h"
 #include "svpng.inc"
 
 int main(int argc, char **argv)
@@ -17,6 +18,9 @@ int main(int argc, char **argv)
     bresenhamLine(rgba, 256, 256, 0, 0, 200, 230);
 
     bresenhamCircle(rgba, 256, 256, 100, 100, 100);
+
+    ellipse1(rgba, 256, 256, 60, 100, 60, 20);
+
     FILE *fp = fopen("rgba.png", "wb");
     svpng(fp, 256, 256, rgba, 1);
     fclose(fp);
